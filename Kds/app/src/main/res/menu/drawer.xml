@@ -4,21 +4,26 @@
     tools:context=".MainActivity">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_item_book"
+            android:id="@+id/navigation_item_friend"
             android:icon="@drawable/ic_launcher"
             android:title="1" />
         <item
-            android:id="@+id/navigation_item_example"
+            android:id="@+id/navigation_item_gym"
             android:icon="@drawable/ic_launcher"
             android:title="2" />
         <item
-            android:id="@+id/navigation_item_blog"
+            android:id="@+id/navigation_item_plan"
             android:icon="@drawable/ic_launcher"
             android:title="3" />
 
         <item
-            android:id="@+id/navigation_item_about"
+            android:id="@+id/navigation_item_account"
             android:icon="@drawable/ic_launcher"
             android:title="4" />
+
+        <item
+            android:id="@+id/navigation_item_exit"
+            android:icon="@drawable/ic_launcher"
+            android:title="注销" />
     </group>
 </menu>

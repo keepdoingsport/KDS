@@ -1,9 +1,13 @@
 package com.example.administrator.kdsdemo01.ui.fragment;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +18,8 @@ import com.example.administrator.kdsdemo01.R;
 import com.example.administrator.kdsdemo01.adapter.GymListAdapter;
 import com.example.administrator.kdsdemo01.api.KdsApi;
 import com.example.administrator.kdsdemo01.model.Gym;
+import com.example.administrator.kdsdemo01.ui.activity.GymDetailActivity;
+import com.example.administrator.kdsdemo01.widget.RecyclerItemClickListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -72,6 +78,7 @@ public class GymListFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //设置frame内的内容:下拉和list
         View view = inflater.inflate(R.layout.fragment_gymlist, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardList);
         //高度不变时提高性能
@@ -80,6 +87,9 @@ public class GymListFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        //设置list的点击事件
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
@@ -97,4 +107,23 @@ public class GymListFragment extends Fragment implements SwipeRefreshLayout.OnRe
         String url = KdsApi.getKdsGymList();
         mClient.get(getActivity(), url, initHandler);
     }
+    //list的点击事件
+    private RecyclerItemClickListener.OnItemClickListener onItemClickListener=new RecyclerItemClickListener.OnItemClickListener(){
+        @Override
+        public void onItemClick(View view, int position) {
+            //点击的是哪个
+            Gym gym=mAdapter.getGym(position);
+            //把选中体育馆的信息保存
+            Intent intent=new Intent(getActivity(), GymDetailActivity.class);
+            intent.putExtra("gym",gym);
+
+            //切换效果
+            ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                            view.findViewById(R.id.iv_cover), "transition_gym_img");
+
+            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+
+        }
+    };
 }

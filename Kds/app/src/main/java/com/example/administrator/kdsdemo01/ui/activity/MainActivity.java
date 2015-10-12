@@ -1,7 +1,11 @@
 package com.example.administrator.kdsdemo01.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,25 +25,85 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView mNavigationView;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,
-                R.string.drawer_close);
-        mDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        container=(CoordinatorLayout)findViewById(R.id.coordinatorLayout);
-        if (!NetworkUtils.isNetworkConnected(this)) {
-            Snackbar.make(container, "加载失败，请重试", Snackbar.LENGTH_LONG).show();
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content,new GymListFragment())
-                .commit();
+            setContentView(R.layout.activity_main);
+            mToolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(mToolbar);
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,
+                    R.string.drawer_close);
+            mDrawerToggle.syncState();
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            container = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            mNavigationView=(NavigationView)findViewById(R.id.navigation_view);
+            setupDrawerContent(mNavigationView);
+        //测试网络是否有问题
+            if (!NetworkUtils.isNetworkConnected(this)) {
+                Snackbar.make(container, "加载失败，请重试", Snackbar.LENGTH_LONG).show();
+            }
+        //加载frame
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new GymListFragment())
+                    .commit();
+ //       }
+    }
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener(){
+
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()){
+                            case R.id.navigation_item_friend:
+                                switchToFriend();
+                                break;
+                            case R.id.navigation_item_gym:
+                                switchToGym();
+                                break;
+                            case R.id.navigation_item_plan:
+                               switchToPlan();
+                                break;
+                            case R.id.navigation_item_account:
+                                switchToAccount();
+                                break;
+                            case R.id.navigation_item_exit:
+                                switchToExit();
+                                break;
+
+                        }
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                }
+        );
+    }
+    private void switchToFriend(){
+
+    }
+    private void switchToGym(){
+
+    }
+    private void switchToPlan(){
+
+    }
+    private void switchToAccount(){
+
     }
 
+    private void switchToExit(){
+        preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("islogin", false);
+        editor.commit();
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(intent);
+        finish();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

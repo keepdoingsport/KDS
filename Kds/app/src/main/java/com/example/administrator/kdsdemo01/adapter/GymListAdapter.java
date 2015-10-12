@@ -56,4 +56,8 @@ public class GymListAdapter extends RecyclerView.Adapter<GymListAdapter.CardView
         }
 
     }
+
+    public Gym getGym(int pos) {
+        return mGymList.get(pos);
+    }
 }

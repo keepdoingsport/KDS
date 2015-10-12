@@ -1,9 +1,11 @@
 package com.example.administrator.kdsdemo01.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/9/12.
  */
-public class Gym{
+public class Gym implements Serializable {
 
     public int id;
     public String address;
