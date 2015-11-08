@@ -35,7 +35,7 @@ public class GymListAdapter extends RecyclerView.Adapter<GymListAdapter.CardView
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Gym gym=mGymList.get(position);
-        Glide.with(mContex).load(gym.getAddress()).placeholder(R.mipmap.loading).into(holder.mImageView);
+        Glide.with(mContex).load(gym.getPhotos()).placeholder(R.mipmap.loading).into(holder.mImageView);
         holder.mTitleView.setText(gym.getId()+"");
     }
 

@@ -10,5 +10,5 @@
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme" />
-
+    <style name="ProgressBarStyle" parent="@android:style/Widget.ProgressBar.Small.Inverse"/>
 </resources>

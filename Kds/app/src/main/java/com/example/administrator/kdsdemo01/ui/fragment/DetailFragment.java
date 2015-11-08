@@ -16,10 +16,12 @@ import com.example.administrator.kdsdemo01.R;
  */
 public class DetailFragment extends Fragment {
 
-    public static DetailFragment newInstance(String info) {
+    public static DetailFragment newInstance(String info,String phone,String address) {
         Bundle args = new Bundle();
         DetailFragment fragment = new DetailFragment();
         args.putString("info", info);
+        args.putString("phone",phone);
+        args.putString("address",address);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,6 +33,10 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, null);
         TextView tvInfo = (TextView) view.findViewById(R.id.tvInfo);
         tvInfo.setText(getArguments().getString("info"));
+        TextView tvPhone = (TextView) view.findViewById(R.id.tvPhone);
+        tvPhone.setText(getArguments().getString("phone"));
+        TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
+        tvAddress.setText(getArguments().getString("address"));
 //        tvInfo.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

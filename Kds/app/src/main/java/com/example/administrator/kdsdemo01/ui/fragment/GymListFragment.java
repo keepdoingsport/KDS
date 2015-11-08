@@ -49,14 +49,29 @@ public class GymListFragment extends Fragment implements SwipeRefreshLayout.OnRe
             mGymList.clear();
             JSONObject jsonObject;
             int id = 0;
-            String address = "";
+            String photos="";
+            String photos1="";
+            String photos2="";
+            String info="";
+            String phone="";
+            String address="";
             for (int i = 0; i < response.length(); i++) {
                 jsonObject = (JSONObject) response.opt(i);
                 try {
                     id = jsonObject.getInt("id");
-                    address = jsonObject.getString("address");
+                    photos= jsonObject.getString("photos");
+                    photos1=jsonObject.getString("photos1");
+                    photos2=jsonObject.getString("photos2");
+                    info=jsonObject.getString("info");
+                    phone=jsonObject.getString("phone");
+                    address=jsonObject.getString("address");
                     Gym gym = new Gym();
                     gym.setId(id);
+                    gym.setPhotos(photos);
+                    gym.setPhoto1(photos1);
+                    gym.setPhoto2(photos2);
+                    gym.setInfo(info);
+                    gym.setPhone(phone);
                     gym.setAddress(address);
                     mGymList.add(gym);
                 } catch (JSONException e) {

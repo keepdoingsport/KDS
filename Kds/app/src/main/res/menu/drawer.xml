@@ -6,20 +6,20 @@
         <item
             android:id="@+id/navigation_item_friend"
             android:icon="@drawable/ic_launcher"
-            android:title="1" />
+            android:title="我的朋友" />
         <item
             android:id="@+id/navigation_item_gym"
             android:icon="@drawable/ic_launcher"
-            android:title="2" />
+            android:title="运动馆" />
         <item
             android:id="@+id/navigation_item_plan"
             android:icon="@drawable/ic_launcher"
-            android:title="3" />
+            android:title="运动计划" />
 
         <item
             android:id="@+id/navigation_item_account"
             android:icon="@drawable/ic_launcher"
-            android:title="4" />
+            android:title="账户余额" />
 
         <item
             android:id="@+id/navigation_item_exit"
